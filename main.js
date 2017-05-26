@@ -14,6 +14,9 @@ var ids = {
   'hero': [
     'home-page',
     'series-minidocs'
+  ],
+  'external': [
+    'home-page-external-links'
   ]
 };
 
@@ -25,4 +28,15 @@ Object.keys(ids.hero).forEach(function(x) {
   }).catch((err) => {
     console.log(err);
   });
-})
+});
+
+// External Links
+
+Object.keys(ids.external).forEach(function(x) {
+  var home = get(x, ids[x]).then(function(stuff) {
+    console.log(stuff.items[0].fields);
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+
