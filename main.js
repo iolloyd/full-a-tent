@@ -17,6 +17,9 @@ var ids = {
   ],
   'external': [
     'home-page-external-links'
+  ],
+  'collections': [
+    'emotions-landing-module-energetic-runway'
   ]
 };
 
@@ -30,13 +33,6 @@ Object.keys(ids.hero).forEach(function(x) {
   });
 });
 
-// External Links
-
-Object.keys(ids.external).forEach(function(x) {
-  get(x, ids[x]).then(function(stuff) {
-    console.log(stuff.items[0].fields);
-  }).catch((err) => {
-    console.log(err);
-  });
+get('hero', 'home-page').then(function(stuff) {
+  console.log(stuff.items[0].fields);
 });
-
