@@ -24,15 +24,6 @@ var ids = {
 };
 
 // Hero pages
-
-Object.keys(ids.hero).forEach(function(x) {
-  get(x, ids[x]).then(function(stuff) {
-    console.log(stuff.items[0].fields);
-  }).catch((err) => {
-    console.log(err);
-  });
-});
-
 get('hero', 'home-page').then(function(stuff) {
   console.log(stuff.items[0].fields);
 });
