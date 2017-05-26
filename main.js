@@ -23,7 +23,7 @@ var ids = {
 // Hero pages
 
 Object.keys(ids.hero).forEach(function(x) {
-  var home = get(x, ids[x]).then(function(stuff) {
+  get(x, ids[x]).then(function(stuff) {
     console.log(stuff.items[0].fields);
   }).catch((err) => {
     console.log(err);
@@ -33,7 +33,7 @@ Object.keys(ids.hero).forEach(function(x) {
 // External Links
 
 Object.keys(ids.external).forEach(function(x) {
-  var home = get(x, ids[x]).then(function(stuff) {
+  get(x, ids[x]).then(function(stuff) {
     console.log(stuff.items[0].fields);
   }).catch((err) => {
     console.log(err);
