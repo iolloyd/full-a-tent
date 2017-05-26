@@ -8,8 +8,10 @@ function get(contentType, slug) {
   contentTypeId = contentMap[contentType];
   var doc = client.getEntries({
     content_type: contentTypeId, 
-    fields.slug: slug, 
+    "fields.slug": slug, 
     include: 10
+  }).catch(function (err) {
+    console.log(err);
   });
   return doc;
 }
@@ -29,5 +31,5 @@ var ids = {
 
 // Hero pages
 get('hero', 'home-page').then(function(stuff) {
-  console.log(stuff.items[0].fields);
+  console.log(stuff.items[0]);
 });
