@@ -6,7 +6,7 @@ var client = contentful.createClient(config);
 
 function get(contentType, slug) {
   contentTypeId = contentMap[contentType];
-  var doc = client.getEntries({"content_type": contentTypeId, "fields.slug": slug, include: 0});
+  var doc = client.getEntries({"content_type": contentTypeId, "fields.slug": slug, include: 100});
   return doc;
 }
 
