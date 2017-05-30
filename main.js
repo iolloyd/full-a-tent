@@ -4,32 +4,37 @@ var contentMap = require('./content_type_mapping');
 
 var client = contentful.createClient(config);
 
-function get(contentType, slug) {
+async function get(contentType, slug) {
   contentTypeId = contentMap[contentType];
-  var doc = client.getEntries({
-    content_type: contentTypeId, 
-    "fields.slug": slug, 
-    include: 10
-  }).catch(function (err) {
-    console.log(err);
-  });
-  return doc;
+  try {
+    var doc = await client.getEntries({ content_type: contentTypeId, "fields.slug": slug, include: 10 });
+    return doc;
+  } catch(err) { 
+    console.log('oops: ' + contentType + ' > ' + slug);
+  };
 }
 
-var ids = {
-  'hero': [
-    'home-page',
-    'series-minidocs'
-  ],
-  'external': [
-    'home-page-external-links'
-  ],
-  'collections': [
-    'emotions-landing-module-energetic-runway'
-  ]
+var pages = {
+  'hero': 'home-page',
+  'hero': 'series-minidocs',
+  'feed': 'emotions-energetic-films',
+  'feed': 'episodes-module-minidocs'
 };
 
-// Hero pages
-get('hero', 'home-page').then(function(stuff) {
-  console.log(stuff.items[0]);
+const startTimer = () => {
+  return new Date().getTime();
+};
+
+const logTimer = (startTime) => {
+  return (new Date().getTime() - startTime);
+};
+
+Object.keys(pages).forEach((x) => {
+  const start = startTimer();
+  get(x, pages[x]).then(result => {
+    console.log();
+    console.log(x + '> ' + pages[x], result);
+  });
+  console.log(logTimer(start));
 });
+
