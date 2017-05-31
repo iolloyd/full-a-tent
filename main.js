@@ -4,22 +4,15 @@ var contentMap = require('./content_type_mapping');
 
 var client = contentful.createClient(config);
 
-async function get(contentType, slug) {
+const get = async (contentType, slug) => {
   contentTypeId = contentMap[contentType];
   try {
     var doc = await client.getEntries({ content_type: contentTypeId, "fields.slug": slug, include: 10 });
     return doc;
   } catch(err) { 
-    console.log('oops: ' + contentType + ' > ' + slug);
+    // console.log('oops: ' + contentType + ' > ' + slug);
   };
 }
-
-var pages = {
-  'hero': 'home-page',
-  'hero': 'series-minidocs',
-  'feed': 'emotions-energetic-films',
-  'feed': 'episodes-module-minidocs'
-};
 
 const startTimer = () => {
   return new Date().getTime();
@@ -29,12 +22,20 @@ const logTimer = (startTime) => {
   return (new Date().getTime() - startTime);
 };
 
-Object.keys(pages).forEach((x) => {
+const showResult = async ({type, slug}) => {
   const start = startTimer();
-  get(x, pages[x]).then(result => {
-    console.log();
-    console.log(x + '> ' + pages[x], result);
-  });
-  console.log(logTimer(start));
-});
+  const result = await get(type, slug);
+  const timed = logTimer(start);
+  console.log(type + ' > ' + slug, timed);
+};
+
+const pages = [
+  {'type': 'feed', 'slug': 'emotions-energetic-films'},
+  {'type': 'feed', 'slug': 'episodes-module-minidocs'},
+  {'type': 'feed', 'slug': 'fashion-week'},
+  {'type': 'hero', 'slug': 'home-page'},
+  {'type': 'hero', 'slug': 'series-minidocs'}
+];
+
+pages.map(showResult);
 
